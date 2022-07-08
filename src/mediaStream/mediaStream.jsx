@@ -2,149 +2,101 @@ import { useEffect, useRef } from "react"
 import { useState } from "react"
 
 const MediaStreamRecorder = () => {
-    const [isRecording, setIsRecording] = useState(false)
-    const videoRef = useRef(null)
-    const streamRef = useRef(null)
+    const [recording, setRecording] = useState(false)
     const [downloadLink, setDownloadLink] = useState('')
-    const streamRecorderRef = useRef(null)
-    const [audioSource, setAudioSource] = useState('')
-    const [videoSource, setVideoSource] = useState('')
-    const [audioSourceOptions, setAudioSourceOptions] = useState([])
-    const [videoSourceOptions, setVideoSourceOptions] = useState([])
     const [error, setError] = useState(null)
-    const chunks = useRef([])
+    const mediaStream = useRef(null)
+    const mediaStreamVideo = useRef(null)
+    const mediaStreamRecorder = useRef(null)
+    const audioSource = useRef([])
+    const videoSource = useRef([])
+    const type = useRef([])
 
-    function startRecording() {
-        if (isRecording) {
+    const record = () => {
+        if (recording) {
             return
         }
-        if (!streamRef.current) {
+        if (!mediaStream.current) {
             return
         }
-        streamRecorderRef.current = new MediaRecorder(streamRef.current)
-        streamRecorderRef.current.start()
-        streamRecorderRef.current.ondataavailable = (event) => {
-            if (chunks.current) {
-                chunks.current.push(event.data)
+        mediaStreamRecorder.current = new MediaRecorder(mediaStream.current)
+        mediaStreamRecorder.current.start()
+        mediaStreamRecorder.current.ondataavailable = (event) => {
+            if (type.current) {
+                type.current.push(event.data)
             }
         }
-        setIsRecording(true)
+        setRecording(true)
+    }
+
+    function stop() {
+        if (!mediaStreamRecorder.current) {
+            return
+        }
+        mediaStreamRecorder.current.stop()
+        setRecording(false)
     }
 
     useEffect(() => {
-        if (isRecording) {
+        if (recording) {
             return
         }
-        if (chunks.current.length === 0) {
+        if (type.current.length === 0) {
             return
         }
-        const blob = new Blob(chunks.current, {
+        const blob = new Blob(type.current, {
             type: 'video/webm;codecs=vp9,opus'
         })
         setDownloadLink(URL.createObjectURL(blob))
-        chunks.current = []
-    }, [isRecording])
-
-    function stopRecording() {
-        if (!streamRecorderRef.current) {
-            return
-        }
-        streamRecorderRef.current.stop()
-        setIsRecording(false)
-    }
+        type.current = []
+    }, [recording])
 
 
     useEffect(async () => {
-        function gotStream(stream) {
-            streamRef.current = stream
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream
+        function getVideo(stream) {
+            mediaStream.current = stream
+            if (mediaStreamVideo.current) {
+                mediaStreamVideo.current.srcObject = stream
             }
         }
 
-
-
-        async function getStream() {
-            if (streamRef.current) streamRef.getTracks().forEach(track => {
+        async function getRecording() {
+            if (mediaStream.current) mediaStream.getTracks().forEach(track => {
                 track.stop()
             })
             const constraints = {
-                audio: { deviceId: audioSource !== '' ? { type: audioSource } : undefined },
-                video: { deviceId: videoSource !== '' ? { type: videoSource } : undefined }
+                audio: audioSource,
+                video: videoSource
             }
             try {
                 const stream = await navigator.mediaDevices.getUserMedia(constraints)
-                gotStream(stream)
+                getVideo(stream)
             } catch (error) {
                 setError(error)
             }
         }
 
-
-        function getDevices() {
-            return navigator.mediaDevices.enumerateDevices()
-        }
-
-        function gotDevices(deviceInfos) {
-            const audioSourceOptions = []
-            const videoSourceOptions = []
-            for (const deviceInfo of deviceInfos) {
-                if (deviceInfo.kind === 'audioinput') {
-                    audioSourceOptions.push({
-                        value: deviceInfo.deviceId,
-                        label: deviceInfo.label || `Microphone ${deviceInfo.deviceId}`
-                    })
-                } else if (deviceInfo.kind === 'videoinput') {
-                    videoSourceOptions.push({
-                        value: deviceInfo.deviceId,
-                        label: deviceInfo.label || `Camera ${deviceInfo.deviceId}`
-                    })
-                }
-            }
-
-            setAudioSourceOptions(audioSourceOptions)
-            setVideoSourceOptions(videoSourceOptions)
-        }
-
-
-        await getStream()
-        const mediaDevices = await getDevices()
-        gotDevices(mediaDevices)
+        await getRecording()
 
     }, [])
 
     return (
         <div>
-            <div>
-                <select name="videoSource" id="videoSource" value={videoSource}>
-                    {videoSourceOptions.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-            </div>
 
             <div>
-                <select name="audioSource" id="audioSource" value={audioSource}>
-                    {audioSourceOptions.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-            </div>
-
-            <div>
-                <video ref={videoRef} autoPlay muted playsInline></video>
+                <video ref={mediaStreamVideo} autoPlay muted playsInline></video>
             </div>
 
             <div>
                 {downloadLink && <video src={downloadLink} controls></video>}
                 {downloadLink && (
-                    <a href={downloadLink} download="file.mp4">Descargar</a>
+                    <a href={downloadLink} download="file.webm">Descargar</a>
                 )}
             </div>
 
             <div>
-                <button onClick={startRecording} disabled={isRecording}>Grabar</button>
-                <button onClick={stopRecording} disabled={!isRecording}>Parar</button>
+                <button onClick={record} disabled={recording}>record</button>
+                <button onClick={stop} disabled={!recording}>stop</button>
             </div>
 
             <div>
