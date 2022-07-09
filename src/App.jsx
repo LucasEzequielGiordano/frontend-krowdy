@@ -1,13 +1,13 @@
 import './App.css'
-import QuestionsCards from './components/questionsCards'
-import MediaStreamRecorder from './mediaStream/mediaStream'
+// import QuestionsCards from './components/questionsCards'
+import QuestionsCardsContainer from './containers/QuestionsCardsContainer'
+// import MediaStreamRecorder from './mediaStream/mediaStream'
 
 
 function App() {
   return (
     <div className="divApp">
-      {/* <MediaStreamRecorder /> */}
-      <QuestionsCards />
+      <QuestionsCardsContainer />
     </div>
   )
 }

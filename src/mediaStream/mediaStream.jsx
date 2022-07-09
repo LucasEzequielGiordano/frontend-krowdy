@@ -12,7 +12,7 @@ const MediaStreamRecorder = () => {
     const videoSource = useRef([])
     const type = useRef([])
 
-    const record = () => {
+    const _handleRecord = () => {
         if (recording) {
             return
         }
@@ -29,7 +29,7 @@ const MediaStreamRecorder = () => {
         setRecording(true)
     }
 
-    function stop() {
+    function _handleStop() {
         if (!mediaStreamRecorder.current) {
             return
         }
@@ -95,8 +95,8 @@ const MediaStreamRecorder = () => {
             </div>
 
             <div>
-                <button onClick={record} disabled={recording}>record</button>
-                <button onClick={stop} disabled={!recording}>stop</button>
+                <button onClick={_handleRecord} disabled={recording}>record</button>
+                <button onClick={_handleStop} disabled={!recording}>stop</button>
             </div>
 
             <div>
