@@ -105,5 +105,4 @@ const MediaStreamRecorder = () => {
         </div>
     )
 }
-
 export default MediaStreamRecorder
