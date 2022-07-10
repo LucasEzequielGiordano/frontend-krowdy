@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom'
-import { getQuestionsVideos } from "../helpers/dataVideos"
-import QuestionsCardsList from "../components/QuestionsCardsList/QuestionCardsList"
+import { getQuestionsVideos } from "../../helpers/dataVideos"
+import QuestionsCardsList from "../../components/QuestionsCardsList/QuestionCardsList"
 
 const QuestionsCardsContainer = () => {
     const [videos, setVideos] = useState([])

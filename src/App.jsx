@@ -1,14 +1,18 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import QuestionDetailContainer from './containers/QuestionDetailContainer/QuestionDetailContainer'
+import QuestionsCardsContainer from './containers/QuestionsCardsContainer/QuestionsCardsContainer'
 import './App.css'
-// import QuestionsCards from './components/questionsCards'
-import QuestionsCardsContainer from './containers/QuestionsCardsContainer'
-// import MediaStreamRecorder from './mediaStream/mediaStream'
-
 
 function App() {
   return (
-    <div className="divApp">
-      <QuestionsCardsContainer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<QuestionsCardsContainer />}>
+        </Route>
+        <Route path='/question/:id' element={<QuestionDetailContainer />}>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
