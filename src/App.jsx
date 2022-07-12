@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path='/' element={<QuestionsCardsContainer />}>
         </Route>
-        <Route path='/question/:id' element={<QuestionDetailContainer />}>
+        <Route path='/question/:detailId' element={<QuestionDetailContainer />}>
         </Route>
       </Routes>
     </BrowserRouter>
