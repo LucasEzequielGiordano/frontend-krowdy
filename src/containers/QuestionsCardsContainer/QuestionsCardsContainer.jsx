@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom'
 import { getQuestionsVideos } from "../../helpers/dataVideos"
 import QuestionsCardsList from "../../components/QuestionsCardsList/QuestionCardsList"
+import './QuestionsCardsContainer.css'
 
 const QuestionsCardsContainer = () => {
     const [videos, setVideos] = useState([])
@@ -21,8 +22,10 @@ const QuestionsCardsContainer = () => {
 
     return (
         <div>
-            <h1>Video Cuestionario</h1>
-            <QuestionsCardsList videos={videos} />
+            <h1 className="title-videos">Video Cuestionario</h1>
+            <div className="question-videos__container">
+                <QuestionsCardsList videos={videos} />
+            </div>
         </div>
     )
 }
