@@ -7,9 +7,8 @@ const QuestionsCards = ({ vid }) => {
         <div className="cards__container">
             <div className="question-card__container">
                 <div className="question-video__card">
-                    {/* <video src="" controls></video> */}
                     <div className='color-video'>
-                        <p></p>
+                        <video muted playsInline></video>
                         <div className='button'>
                             <Link to={`/question/${vid.id}`}>
                                 <ButtonPlayCards />

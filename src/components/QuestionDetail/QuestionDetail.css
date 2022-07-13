@@ -1,0 +1,31 @@
+div.detail__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+div.detail-back {
+    width: 87%;
+    text-align: start;
+}
+
+video#recorded {
+    display: none;
+}
+
+div.video-question {
+    background-color: #E5E5E5;
+    width: 87%;
+}
+
+div.video-question p {
+    text-align: center;
+}
+
+div.video-id {
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+}

@@ -3,6 +3,7 @@ div.cards__container {
     flex-wrap: wrap;
     max-width: 500px;
     min-width: 150px;
+    background-color: #000;
 }
 
 div.question-card__container,
@@ -17,7 +18,7 @@ div.color-video {
 
 div.button {
     width: 50%;
-    transform: translate(30px, -75px);
+    transform: translate(25px, -20px);
 }
 
 div.color-video>p {
@@ -30,5 +31,5 @@ div.question-color__card {
     background-color: #E5E5E5;
     text-align: center;
     padding: 3px;
-    transform: translate(0, -50px);
+    /* transform: translate(0, -50px); */
 }

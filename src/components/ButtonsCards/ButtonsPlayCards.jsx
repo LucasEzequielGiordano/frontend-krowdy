@@ -1,8 +1,8 @@
-import { AiFillPlayCircle } from 'react-icons/all'
+import { AiFillPlayCircle } from 'react-icons/ai'
 
 const ButtonPlayCards = () => {
     return (
-        <AiFillPlayCircle color='white' size={30}></AiFillPlayCircle>
+        <AiFillPlayCircle color='grey' size={35}></AiFillPlayCircle>
     )
 }
 

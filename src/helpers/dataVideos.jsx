@@ -1,8 +1,8 @@
 const questionsVideos = [
-    { id: 1, question: '¿Qué te motivo a estudiar programación?', time: 0, response: [] },
-    { id: 2, question: '¿Qué hacías antes de estudiar programación?', time: 0, response: [] },
-    { id: 3, question: '¿Tuviste alguna experiencia laboral previa?', time: 0, response: [] },
-    { id: 4, question: '¿Cual fue tu mayor reto en un proyecto?', time: 0, response: [] }
+    { id: 1, question: '¿Qué te motivo a estudiar programación?' },
+    { id: 2, question: '¿Qué hacías antes de estudiar programación?' },
+    { id: 3, question: '¿Tuviste alguna experiencia laboral previa?' },
+    { id: 4, question: '¿Cual fue tu mayor reto en un proyecto?' }
 ]
 
 export const getQuestionsVideos = (id) => {
